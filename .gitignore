@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
 
 # dependencies
 /node_modules
@@ -13,7 +12,6 @@
 /build
 
 # misc
-.env
 .DS_Store
 .env.local
 .env.development.local
@@ -128,4 +126,3 @@ dist
 
 # TernJS port file
 .tern-port
->>>>>>> a27559cb4220481bc1acc89506177849d670ed1b
