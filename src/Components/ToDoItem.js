@@ -37,7 +37,7 @@ class TodoItem extends Component
     {
         const todoInfo = this.state;
         return (<div className="todo-item" >
-                <input type="checkbox" onChange={() =>{this.CompleteWork(todoInfo._id)}}></input>
+                <input type="checkbox" onChange={() =>{this.CompleteWork(todoInfo)}} checked={todoInfo.complete}></input>
                 <div className="todo-info">
                     <h5 style={this.isComplete()}>{todoInfo.title}</h5>
                     <p style={this.isComplete()}>{todoInfo.descript} </p>

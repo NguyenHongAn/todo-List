@@ -14,7 +14,9 @@ const userRouter = require('./controllers/user_controller.js');
 const CORS = require('./midlewares/CORSconfig');
 mongoose.connect(process.env.MongoURI,{
                 useNewUrlParser: true, 
-                useUnifiedTopology: true
+                useUnifiedTopology: true,
+                useCreateIndex: true,
+                useFindAndModify: false
         })
         .then(() =>{log('Connect successful to mongo DB'); });
                             

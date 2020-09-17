@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Redirect, Route} from 'react-router-dom';
 import TodoList from './Components/TodoList';
 import './App.css';
 import Header from './Components/Header';
@@ -8,6 +8,7 @@ import {v4 as uuidv4} from 'uuid';
 import About from './Components/About';
 import Axios from 'axios';
 
+let log = console.log;
 class App extends React.Component {
 
   constructor(props)
@@ -28,7 +29,6 @@ class App extends React.Component {
     try {
       const response = await Axios.get(`${this.serverURL}/todo-list`);
       let todoList = response.data;
-      console.log(todoList);
       this.setState({
         todos: todoList,
       });
@@ -39,18 +39,26 @@ class App extends React.Component {
     
   }
   //toggle completed base on id of todoItem
-  CompleteWork = async (id) =>
+  CompleteWork = async (todo) =>
     {
       let todos = this.state['todos'];
-      todos = todos.map(todo =>{
-            if (todo._id=== id)
-            {
-                todo.complete = !todo.complete;
-                return todo;
-            }
-            return todo;
-        });
-        this.setState({todos: todos});
+      todo.complete = !todo.complete;
+      let response = await Axios.put(`/todo-list`, todo);
+      log({put: response});
+      if (response.status !== 200)
+      {
+        //hadle error
+        log(response.statusText);
+      }
+      todos.map(eachTodo =>{
+        if (eachTodo._id === todo._id)
+        {
+          return todo;
+        }
+        return eachTodo;
+      });
+      
+      this.setState({todos: todos});
     }
 
     //handle remove todoItem base on id of todoItem
@@ -58,18 +66,29 @@ class App extends React.Component {
     {
         let todos = this.state['todos'];
         let response = await Axios.delete(`/todo-list/${id}`);
+        if(response.status!== 200)
+        {
+          //hadle error 
+          console.log(response.msg);
+
+        }
         this.setState({todos: todos.filter(todo=>{
             return todo._id !== id;
         })});
     }
-    
+
     async HandleNewWork(todo)
     {
       try{
-        let newtodo = todo;
-        newtodo._id = uuidv4();
-        let res = await Axios.post('/todo-list', newtodo);
-        console.log(res);
+        let newtodo = Object.assign({},todo);
+        //newtodo["_id"] = uuidv4();
+        //console.log(newtodo);
+        let res = await Axios.post('/todo-list',newtodo);
+        if(res.status !== 200)
+        {
+          console.log(res.msg);
+        }
+        newtodo = res.data;
         this.setState({
           todos: [...this.state.todos, newtodo],
         });
@@ -86,6 +105,9 @@ class App extends React.Component {
       return (
         <Router>
            <div className="App container">
+          <Route path="/">
+            <Redirect to="/todo-list"></Redirect>
+          </Route>
           <Route exact path="/todo-list" render={(props) => (
             <React.Fragment>
               
