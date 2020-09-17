@@ -4,7 +4,6 @@ import TodoList from './Components/TodoList';
 import './App.css';
 import Header from './Components/Header';
 import AddTodo from './Components/AddToDo'
-import {v4 as uuidv4} from 'uuid';
 import About from './Components/About';
 import Axios from 'axios';
 
