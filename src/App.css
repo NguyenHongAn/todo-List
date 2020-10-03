@@ -42,15 +42,24 @@ div> p{
 
 .todo-info
 {
-  text-align: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
 }
 .remove-btn
 {
   background-color: red;
   font-size: 14px;
   border-radius: 3px;
-  
   cursor: pointer;
+}
+
+.change-btn
+{
+  background-color: yellow;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 3px;
 }
 
 .form-todo

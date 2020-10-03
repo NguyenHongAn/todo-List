@@ -24,7 +24,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "server": "nodemon -r dotenv/config server/server dotenv_config_path=./config/.env",
+    "server": "nodemon -r dotenv/config server/server.js dotenv_config_path=./config/.env",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

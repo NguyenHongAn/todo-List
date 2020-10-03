@@ -1,11 +1,14 @@
 import React from 'react';
-import {BrowserRouter as Router, Redirect, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Redirect, Route, Switch} from 'react-router-dom';
 import TodoList from './Components/TodoList';
 import './App.css';
 import Header from './Components/Header';
 import AddTodo from './Components/AddToDo'
 import About from './Components/About';
 import Axios from 'axios';
+import SignIn from './Components/SignIn';
+import SignUp from './Components/SignUp';
+
 
 let log = console.log;
 class App extends React.Component {
@@ -26,7 +29,7 @@ class App extends React.Component {
   async componentDidMount()
   {
     try {
-      const response = await Axios.get(`${this.serverURL}/todo-list`);
+      const response = await Axios.get(`/todo-list`);
       let todoList = response.data;
       this.setState({
         todos: todoList,
@@ -101,12 +104,19 @@ class App extends React.Component {
 
     render()
     {
+      //let history = useHistory();
       return (
+        <div className="App container">
         <Router>
-           <div className="App container">
-          <Route path="/">
-            <Redirect to="/todo-list"></Redirect>
+          <Switch>
+            <Redirect exact from="/" to="user/signin"/>      
+          <Route path="user/signin" component={SignIn}> 
+            
           </Route>
+          <Route path="user/signup" component={SignUp}>
+            
+          </Route>
+          
           <Route exact path="/todo-list" render={(props) => (
             <React.Fragment>
               
@@ -117,8 +127,10 @@ class App extends React.Component {
             </React.Fragment>
           )}></Route>
           <Route path='/about' component={About}></Route>
-          </div>
+          
+        </Switch>
         </Router>
+        </div>
       );
     }  
 }

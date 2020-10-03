@@ -1,6 +1,7 @@
 //import package
 const express = require('express');
-const dotenv = require('dotenv');
+
+//const dotenv = require('dotenv');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 let log = console.log;
@@ -21,7 +22,7 @@ mongoose.connect(process.env.MongoURI,{
                             
 //config
 const app = express();
-dotenv.config({path: '../config/.env'});
+//dotenv.config({path: '../config/.env'});
 
 app.use(CORS.AccessControllAllowOrigin);
 
@@ -36,6 +37,6 @@ const HOST_NAME = process.env.HOST_NAME;
 
 //switch router for handle request from client
 app.use('/todo-list', todoRouter);
-app.use('/user', userRouter)
+app.use('/user', userRouter);
 
-app.listen(PORT,()=> {console.log(`SERVER START: ${HOST_NAME} AT PORT: ${PORT} `)})
+app.listen(PORT,()=> {console.log(`SERVER START: ${HOST_NAME} AT PORT: ${PORT} `)});
